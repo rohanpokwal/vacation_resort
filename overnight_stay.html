@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overnight Stay</title>
+    <!-- css link -->
+    <link rel="stylesheet" href="css/overnight.css" />
+    <!-- bootstrap style sheet -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <section>
+      <!-- This is the form that collects the data about the car rental -->
+      <form id="overnightForm">
+        <!-- First Name  -->
+        <div class="mb-3">
+          <label for="fs-name">First Name: </label>
+          <input id="fs-name" name="fs-name" type="text" />
+        </div>
+
+        <!-- Last Name -->
+        <div class="mb-3">
+          <label for="ls-name">Last Name: </label>
+          <input id="ls-name" name="ls-name" type="text" />
+        </div>
+
+        <!-- Email address -->
+        <div class="mb-3">
+          <label for="fs-name">Email: </label>
+          <input id="email" name="email" type="text" />
+        </div>
+
+        <!-- Checkin Date -->
+        <div class="mb-3">
+          <label for="checkin-date">Check-in Date: </label>
+          <input id="checkin-date" name="checkin-date" type="date" />
+        </div>
+
+        <!-- Number of Nights -->
+        <div class="mb-3">
+          <label for="numNight">Number of Nights: </label>
+          <input id="numNight" name="numNight" type="number" />
+        </div>
+
+        <!-- Room Type -->
+        <div class="mb-3">
+          <p>Select a room type:</p>
+          <!-- for queen -->
+          <input
+            type="radio"
+            name="roomtype"
+            id="queen"
+            value="queen"
+            checked
+          />
+          <label for="queen">Queen</label>
+
+          <!-- for king -->
+          <input type="radio" name="roomtype" id="king" value="king" />
+          <label for="king">King</label>
+
+          <!-- 2 bed room suite -->
+          <input
+            type="radio"
+            name="roomtype"
+            id="multi-bedroom"
+            value="multi-bed"
+          />
+          <label for="multi-bedroom">2 Bedroom Suite</label>
+        </div>
+
+        <!-- Number of People -->
+        <div class="my-3 w-50" id="numPeople">
+          <!-- Number of Adults -->
+          <div class="mb-3">
+            <label for="numAdult">Number of Adults (1-4): </label>
+            <input id="numAdult" name="numAdult" type="number" />
+          </div>
+          <!-- Number of Children -->
+          <div class="mb-3">
+            <label for="numChild">Number of Children (0-4): </label>
+            <input id="numChild" name="numChild" type="number" />
+          </div>
+        </div>
+
+        <!-- Radio Buttons for Discounts -->
+        <div class="mb-3" id="discounts">
+          <p><strong>Would like to use discounts today?</strong></p>
+          <!-- for AAA/Senior -->
+          <input
+            type="radio"
+            name="excluDiscount"
+            id="seniorDis"
+            value="senior"
+          />
+          <label for="seniorDis">AAA/Senior (10%)</label>
+
+          <!-- for Military -->
+          <input
+            type="radio"
+            name="excluDiscount"
+            id="militaryDis"
+            value="military"
+          />
+          <label for="militaryDis">Military (20%)</label>
+
+          <!-- 2 bed room suite -->
+          <input type="radio" name="excluDiscount" id="noDis" value="noDis" />
+          <label for="noDis">None</label>
+        </div>
+
+        <button>Estimate Stay Cost</button>
+      </form>
+
+      <!-- Div that will hold the output of the rental car estimator -->
+      <div class="mt-3" id="results"></div>
+    </section>
+
+    <!-- Bootstrap JS File-->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="scripts/overnight_stay.js"></script>
+  </body>
+</html>
