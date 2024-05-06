@@ -27,7 +27,9 @@ function calculateOvernightStay(event) {
   let numChild = Number(overnightForm.numChild.value);
   let firstName = document.querySelector("#fs-name").value;
   let occupants = numAdult + numChild;
-  console.log(occupants);
+  let dateFromUser = overnightForm.checkindate.value;
+  console.log(typeof dateFromUser);
+
   let message;
   if (roomType() === "queen" && occupants >= 5) {
     message = `The room you selected will not hold your party.`;
@@ -38,7 +40,7 @@ function calculateOvernightStay(event) {
   } else {
     message = `
     <div>Estimate Room Price: ${totalCost}</div>
-    <div>Confirmation: ${firstName.substr(0, 4)}</div>
+    <div>Confirmation: ${firstName.substr(0, 4)}-</div>
 
     `;
   }
