@@ -17,30 +17,45 @@ function calculateOvernightStay(event) {
   //Calculating Everything
   let numNight = overnightForm.numNight.value;
   let originalRoomCost = getRoomRate() * numNight;
-  let discountAmount = getRoomRate() * getDiscountRate();
-  let costAfterDis = getRoomRate() - discountAmount;
+  let discountAmount = originalRoomCost * getDiscountRate();
+  let costAfterDis = originalRoomCost - discountAmount;
   let taxCost = calculateTax(costAfterDis);
-  let totalCost = originalRoomCost - discountAmount + taxCost;
+  let totalCost = costAfterDis + taxCost;
 
-  //print the Message
+  //For the Display
   let numAdult = Number(overnightForm.numAdult.value);
   let numChild = Number(overnightForm.numChild.value);
-  let firstName = document.querySelector("#fs-name").value;
   let occupants = numAdult + numChild;
+
+  //work for the confirmation number
+  let firstName = document.querySelector("#fs-name").value;
   let dateFromUser = overnightForm.checkindate.value;
-  console.log(typeof dateFromUser);
+  let hypenPosition = dateFromUser.indexOf("-");
+  let lastHypenPosition = dateFromUser.lastIndexOf("-");
+  let monthForConfirmation = dateFromUser.substring(
+    hypenPosition + 1,
+    lastHypenPosition
+  );
+  let yearForConfirmation = dateFromUser.substring(0, hypenPosition);
 
   let message;
   if (roomType() === "queen" && occupants >= 5) {
     message = `The room you selected will not hold your party.`;
-  } else if (roomType() === "king" && occupants >= 2) {
+  } else if (roomType() === "king" && occupants > 2) {
     message = `The room you selected will not hold your party.`;
-  } else if (roomType() === "multibed" && occupants >= 6) {
+  } else if (roomType() === "multibed" && occupants > 6) {
     message = `The room you selected will not hold your party.`;
   } else {
     message = `
-    <div>Estimate Room Price: ${totalCost}</div>
-    <div>Confirmation: ${firstName.substr(0, 4)}-</div>
+    <div>Original Cost: $ ${originalRoomCost}</div>
+    <div>Discount: ${getDiscountRate() * 100} %</div>
+    <div>Discounted Room Price: $ ${costAfterDis}</div>
+    <div>Tax: ${taxCost}</div>
+    <div>Total Cost of the Stay: ${totalCost}</div>
+    <div>Confirmation: ${firstName.substring(
+      0,
+      3
+    )}-${monthForConfirmation}${yearForConfirmation}-${numNight}:${numAdult}:${numChild}</div>
 
     `;
   }
@@ -54,9 +69,23 @@ function getRoomRate() {
   let month = getMonth();
   let roomSelectedType = roomType();
 
-  if (
+  if (roomSelectedType === "multibed" && month >= 6 && month <= 8) {
+    roomRate = 350;
+  } else if (roomSelectedType === "multibed") {
+    roomRate = 210;
+  } else if (
     (roomSelectedType === "queen" || roomSelectedType === "king") &&
+    month >= 6 &&
     month <= 8
+  ) {
+    roomRate = 250;
+  } else if (roomSelectedType === "queen" || roomSelectedType === "king") {
+    roomRate = 150;
+  }
+
+  /*  if (
+    (roomSelectedType === "queen" || roomSelectedType === "king") &&
+    month >= 6 && month <= 8 
   ) {
     roomRate = 250;
   } else if (
@@ -68,7 +97,7 @@ function getRoomRate() {
     roomRate = 350;
   } else {
     roomRate = 210;
-  }
+  } */
 
   return roomRate;
 }
