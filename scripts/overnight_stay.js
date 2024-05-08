@@ -30,13 +30,6 @@ function calculateOvernightStay(event) {
   //work for the confirmation number
   let firstName = document.querySelector("#fs-name").value;
   let dateFromUser = overnightForm.checkindate.value;
-  let hypenPosition = dateFromUser.indexOf("-");
-  let lastHypenPosition = dateFromUser.lastIndexOf("-");
-  let monthForConfirmation = dateFromUser.substring(
-    hypenPosition + 1,
-    lastHypenPosition
-  );
-  let yearForConfirmation = dateFromUser.substring(0, hypenPosition);
 
   let message;
   if (roomType() === "queen" && occupants >= 5) {
@@ -52,15 +45,19 @@ function calculateOvernightStay(event) {
     <div>Discounted Room Price: $ ${costAfterDis}</div>
     <div>Tax: ${taxCost}</div>
     <div>Total Cost of the Stay: ${totalCost}</div>
-    <div>Confirmation: ${firstName.substring(
-      0,
-      3
-    )}-${monthForConfirmation}${yearForConfirmation}-${numNight}:${numAdult}:${numChild}</div>
-
     `;
   }
+  //call the function for confirmation Number
+  let confirNum = confirmationNumber(
+    firstName,
+    dateFromUser,
+    numNight,
+    numAdult,
+    numChild
+  );
 
   document.querySelector("#results").innerHTML = message;
+  document.querySelector("#confirmationNu").innerHTML = confirNum;
 }
 
 //this will get the room price
@@ -82,22 +79,6 @@ function getRoomRate() {
   } else if (roomSelectedType === "queen" || roomSelectedType === "king") {
     roomRate = 150;
   }
-
-  /*  if (
-    (roomSelectedType === "queen" || roomSelectedType === "king") &&
-    month >= 6 && month <= 8 
-  ) {
-    roomRate = 250;
-  } else if (
-    (roomSelectedType === "queen" || roomSelectedType === "king") &&
-    month > 8
-  ) {
-    roomRate = 150;
-  } else if (roomSelectedType === "multibed" && month <= 8) {
-    roomRate = 350;
-  } else {
-    roomRate = 210;
-  } */
 
   return roomRate;
 }
@@ -142,4 +123,21 @@ function roomType() {
     roomType = "multibed";
   }
   return roomType;
+}
+
+function confirmationNumber(fname, date, nuStay, nuAdlt, nuKids) {
+  let confirmation = "";
+  let hypenPosition = date.indexOf("-");
+  let lastHypenPosition = date.lastIndexOf("-");
+  let monthForConfirmation = date.substring(
+    hypenPosition + 1,
+    lastHypenPosition
+  );
+  let yearForConfirmation = date.substring(0, hypenPosition);
+  confirmation = `Confirmation: ${fname.substring(
+    0,
+    3
+  )}-${monthForConfirmation}${yearForConfirmation}-${nuStay}:${nuAdlt}:${nuKids}`;
+
+  return confirmation;
 }
